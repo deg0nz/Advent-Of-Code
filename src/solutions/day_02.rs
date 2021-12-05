@@ -45,14 +45,32 @@ impl Day for Day02 {
             }
         }
 
-        println!("Depth: {}", depth);
-        println!("Horizontal: {}", horizontal);
-        println!("Multiplied: {}", depth * &horizontal);
+        println!("Multiplied A: {}", depth * horizontal);
 
         Ok(())
     }
 
     fn b(&self) -> Result<()> {
-        todo!()
+        let mut horizontal: u32 = 0;
+        let mut depth: u32 = 0;
+        let mut aim: u32 = 0;
+
+        for line in &self.data {
+            let values = Day02::parse_line_into_values(line)?;
+
+            match values.0.as_str() {
+                "forward" => { 
+                    horizontal += values.1;
+                    depth += aim * values.1;
+                },
+                "up" => aim -= values.1,
+                "down" => aim += values.1,
+                _ => unreachable!()
+            }
+        }
+
+        println!("Multiplied B: {}", depth * horizontal);
+
+        Ok(())
     }
 }
