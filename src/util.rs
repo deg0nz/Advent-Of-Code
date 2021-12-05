@@ -1,3 +1,4 @@
+use color_eyre::eyre::Result;
 use std::{path::PathBuf, str::FromStr};
 
 use std::fs;

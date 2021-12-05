@@ -1,23 +1,21 @@
-use std::{error::Error};
+use color_eyre::eyre::Result;
 
 use crate::util::Day;
 
 use super::super::util::Util;
 
-pub struct Day01{
+pub struct Day01 {
     data: Vec<u32>,
 }
 
 impl Day01 {
-    pub fn new() -> Result<Day01, Box<dyn Error>> {
+    pub fn new() -> Result<Day01> {
         let util = Util::new();
         let input = util.read_input::<u32>("day_01.txt");
 
         let data = input.iter().map(|x| x.to_owned().unwrap()).collect();
 
-        Ok(Self {
-            data
-        })
+        Ok(Self { data })
     }
 
     fn sum_window(&self, window: &[u32]) -> u32 {
@@ -30,7 +28,7 @@ impl Day01 {
 }
 
 impl Day for Day01 {
-    fn a(&self){
+    fn a(&self) {
         // dbg!(&self.data);
         let mut increase_counter: u32 = 0;
         let mut iter = self.data.iter().peekable();
