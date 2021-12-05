@@ -3,18 +3,13 @@ use color_eyre::eyre::Result;
 use crate::util::{Util, Day};
 
 pub struct Day02 {
-    data: Vec<String>,
+    data: String,
 }
 
 impl Day02 {
     pub fn new() -> Result<Day02> {
         let util = Util::new();
-        let input = util.read_input::<String>("day_02.txt");
-
-        let data: Vec<String> = input
-            .iter()
-            .map(|x| x.to_owned().unwrap())
-            .collect();
+        let data = util.read_input("day_02.txt")?;
 
         Ok(Self { data })
     }
@@ -34,8 +29,8 @@ impl Day for Day02 {
         let mut horizontal: u32 = 0;
         let mut depth: u32 = 0;
 
-        for line in &self.data {
-            let values = Day02::parse_line_into_values(line)?;
+        for line in self.data.lines() {
+            let values = Day02::parse_line_into_values(&line.to_string())?;
 
             match values.0.as_str() {
                 "forward" => horizontal += values.1,
@@ -55,8 +50,8 @@ impl Day for Day02 {
         let mut depth: u32 = 0;
         let mut aim: u32 = 0;
 
-        for line in &self.data {
-            let values = Day02::parse_line_into_values(line)?;
+        for line in self.data.lines() {
+            let values = Day02::parse_line_into_values(&line.to_string())?;
 
             match values.0.as_str() {
                 "forward" => { 

@@ -1,5 +1,5 @@
 use color_eyre::eyre::Result;
-use std::{path::PathBuf, str::FromStr};
+use std::path::PathBuf;
 
 use std::fs;
 
@@ -19,13 +19,9 @@ impl Util {
         Self { input_dir }
     }
 
-    pub fn read_input<T: FromStr>(&self, file_name: &str) -> Vec<Result<T, <T as FromStr>::Err>> {
+    pub fn read_input(&self, file_name: &str) -> Result<String> {
         let path = self.input_dir.join(file_name);
 
-        fs::read_to_string(path)
-            .expect("file not found!")
-            .lines()
-            .map(|x| x.parse::<T>())
-            .collect()
+        Ok(fs::read_to_string(path).expect("file not found!"))
     }
 }

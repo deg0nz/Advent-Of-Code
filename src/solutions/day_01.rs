@@ -11,9 +11,9 @@ pub struct Day01 {
 impl Day01 {
     pub fn new() -> Result<Day01> {
         let util = Util::new();
-        let input = util.read_input::<u32>("day_01.txt");
+        let input = util.read_input("day_01.txt")?;
 
-        let data = input.iter().map(|x| x.to_owned().unwrap()).collect();
+        let data = input.lines().map(|line| line.parse::<u32>().unwrap()).collect();
 
         Ok(Self { data })
     }

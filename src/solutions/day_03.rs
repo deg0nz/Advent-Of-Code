@@ -1,22 +1,15 @@
-use std::slice::SliceIndex;
-
 use color_eyre::eyre::Result;
 
 use crate::util::{Util, Day};
 
 pub struct Day03 {
-    data: Vec<String>,
+    data: String,
 }
 
 impl Day03 {
     pub fn new() -> Result<Day03> {
         let util = Util::new();
-        let input = util.read_input::<String>("day_03.txt");
-
-        let data: Vec<String> = input
-            .iter()
-            .map(|x| x.to_owned().unwrap())
-            .collect();
+        let data = util.read_input("day_03.txt")?;
 
         Ok(Self { data })
     }
@@ -24,7 +17,7 @@ impl Day03 {
 
 impl Day for Day03 {
     fn a(&self) -> Result<()> {
-        let line_len = self.data[0].len();
+        let line_len = self.data.lines().next().unwrap().len();
         let mut bits_count: Vec<(u32, u32)> = Vec::new();
         let mut gamma_bits = String::new();
 
@@ -32,7 +25,7 @@ impl Day for Day03 {
             bits_count.push((0, 0));
         }
         
-        self.data.iter().for_each(|line| {
+        self.data.lines().for_each(|line| {
             let chars = line.chars();
             chars.enumerate().for_each(|(i, char)| {
                 if char == '0' {
