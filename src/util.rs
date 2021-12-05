@@ -4,8 +4,8 @@ use std::{path::PathBuf, str::FromStr};
 use std::fs;
 
 pub trait Day {
-    fn a(&self);
-    fn b(&self);
+    fn a(&self) -> Result<()>;
+    fn b(&self) -> Result<()>;
 }
 
 pub struct Util {

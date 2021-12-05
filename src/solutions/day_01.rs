@@ -28,7 +28,7 @@ impl Day01 {
 }
 
 impl Day for Day01 {
-    fn a(&self) {
+    fn a(&self) -> Result<()>{
         // dbg!(&self.data);
         let mut increase_counter: u32 = 0;
         let mut iter = self.data.iter().peekable();
@@ -42,9 +42,11 @@ impl Day for Day01 {
         }
 
         println!("Depth A: {}", increase_counter);
+
+        Ok(())
     }
 
-    fn b(&self) {
+    fn b(&self) -> Result<()> {
         let mut increase_counter: u32 = 0;
         let mut windows = self.data.windows(3).peekable();
 
@@ -60,5 +62,7 @@ impl Day for Day01 {
         }
 
         println!("Depth B: {}", increase_counter);
+
+        Ok(())
     }
 }
