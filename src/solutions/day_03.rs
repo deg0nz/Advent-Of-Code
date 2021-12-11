@@ -8,6 +8,9 @@ pub struct Day03 {
 
 impl Day03 {
     pub fn new() -> Result<Day03> {
+        println!("");
+        println!("========= Day 03: Binary Diagnostic =========");
+
         let util = Util::new();
         let data = util.read_input("day_03.txt")?;
 
@@ -105,8 +108,8 @@ impl Day for Day03 {
             }
         }
 
-        dbg!(oxygen_generator_rating_filter);
-        dbg!(co2_scrubber_rating_filter);
+        // dbg!(oxygen_generator_rating_filter);
+        // dbg!(co2_scrubber_rating_filter);
 
         println!(
             "Oxygen generator rating: {} ({:b})",

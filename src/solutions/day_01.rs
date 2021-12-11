@@ -10,6 +10,9 @@ pub struct Day01 {
 
 impl Day01 {
     pub fn new() -> Result<Day01> {
+        println!("");
+        println!("========= Day 01: Sonar Sweep =========");
+
         let util = Util::new();
         let input = util.read_input("day_01.txt")?;
 

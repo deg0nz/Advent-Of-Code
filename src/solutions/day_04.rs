@@ -1,5 +1,3 @@
-use std::ops::ControlFlow;
-
 use color_eyre::eyre::Result;
 
 use crate::util::Day;
@@ -14,6 +12,9 @@ pub struct Day04 {
 
 impl Day04 {
     pub fn new() -> Result<Day04> {
+        println!("");
+        println!("========= Day 04: Giant Squid =========");
+
         let util = Util::new();
         let input = util.read_input("day_04.txt")?;
 
@@ -86,7 +87,7 @@ impl Day04 {
         marker_board: &mut [[bool; 5]; 5],
         current_draw: &u32,
     ) -> bool {
-        let mut row_counter: u32 = 0;
+        let mut row_counter: u32;
         let mut col_counter: Vec<u32> = vec![0, 0, 0, 0, 0];
 
         for row in 0..5 {

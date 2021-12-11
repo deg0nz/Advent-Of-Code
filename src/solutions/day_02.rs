@@ -8,6 +8,9 @@ pub struct Day02 {
 
 impl Day02 {
     pub fn new() -> Result<Day02> {
+        println!("");
+        println!("========= Day 02: Dive! =========");
+
         let util = Util::new();
         let data = util.read_input("day_02.txt")?;
 
