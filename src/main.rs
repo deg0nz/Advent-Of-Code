@@ -26,7 +26,7 @@ fn main() -> Result<()> {
     println!("========= Day 04 =========");
     let day_04 = solutions::day_04::Day04::new()?;
     day_04.a()?;
-    // day_04.b()?;
+    day_04.b()?;
 
     Ok(())
 }

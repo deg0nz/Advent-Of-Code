@@ -79,60 +79,103 @@ impl Day04 {
 
         sum
     }
+
+    fn iterate_board(
+        &self,
+        board: &[[u32; 5]; 5],
+        marker_board: &mut [[bool; 5]; 5],
+        current_draw: &u32,
+    ) -> bool {
+        let mut row_counter: u32 = 0;
+        let mut col_counter: Vec<u32> = vec![0, 0, 0, 0, 0];
+
+        for row in 0..5 {
+            row_counter = 0;
+
+            for col in 0..5 {
+                if board[row][col] == *current_draw {
+                    marker_board[row][col] = true;
+                }
+
+                if marker_board[row][col] {
+                    col_counter[col] += 1;
+                    row_counter += 1;
+                }
+
+                if col_counter[col] == 5 || row_counter == 5 {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
 }
 
 impl Day for Day04 {
     fn a(&self) -> Result<()> {
         let mut marker = self.boards_marker.clone();
-        let mut bingo = false;
 
-        self.draw.iter().for_each(|current_draw| {
-            self.boards.iter().enumerate().for_each(|(i, board)| {
-                let mut row_counter: u32 = 0;
-                let mut col_counter: Vec<u32> = vec![0, 0, 0, 0, 0];
+        'draw: for current_draw in self.draw.iter() {
+            for (i, board) in self.boards.iter().enumerate() {
+                let bingo = self.iterate_board(board, &mut marker[i], current_draw);
 
-                for row in 0..5 {
-                    row_counter = 0;
+                if bingo {
+                    let sum_unmarked = self.sum_unmarked(board, &marker[i]);
 
-                    for col in 0..5 {
-                        if board[row][col] == *current_draw {
-                            marker[i][row][col] = true;
-                        }
+                    println!("BINGO! Winner Number: {}", current_draw);
+                    println!(
+                        "Score: {} ({}*{})",
+                        current_draw * sum_unmarked,
+                        current_draw,
+                        sum_unmarked
+                    );
 
-                        if marker[i][row][col] {
-                            col_counter[col] += 1;
-                            row_counter += 1;
-                        }
-
-                        if col_counter[col] == 5 || row_counter == 5 {
-                            bingo = true;
-                            let sum_unmarked = self.sum_unmarked(board, &marker[i]);
-
-                            println!("BINGO! Winner Number: {}", current_draw);
-                            println!(
-                                "Score: {} ({}*{})",
-                                current_draw * sum_unmarked,
-                                current_draw,
-                                sum_unmarked
-                            );
-                        }
-
-                        if bingo {
-                            break;
-                        }
-                    }
-
-                    if bingo {
-                        break;
-                    }
+                    break 'draw;
                 }
-            });
-        });
+            }
+        }
 
         Ok(())
     }
 
     fn b(&self) -> Result<()> {
-        todo!()
+        let mut marker = self.boards_marker.clone();
+        let mut winner_boards: Vec<[[u32; 5]; 5]> = Vec::new();
+        let mut winner_boards_i: Vec<u32> = Vec::new();
+
+        let mut last_draw = 0;
+
+        'draw: for current_draw in self.draw.iter() {
+            for (i, board) in self.boards.iter().enumerate() { 
+                let bingo = self.iterate_board(board, &mut marker[i], current_draw);
+
+                if bingo && !winner_boards.contains(board) {
+                    winner_boards.push(*board);
+                    winner_boards_i.push(i as u32);
+                }
+
+                if winner_boards.len() == self.boards.len() {
+                    last_draw = *current_draw;
+                    break 'draw;
+                }
+            }
+        }
+
+        let last_board = winner_boards.last().unwrap();
+
+        let sum_unmarked = self.sum_unmarked(
+            last_board,
+            &marker[self.boards.iter().position(|board| board == last_board).unwrap()],
+        );
+
+        println!(
+            "Score: {} ({}*{})",
+            last_draw * sum_unmarked,
+            last_draw,
+            sum_unmarked
+        );
+
+        Ok(())
     }
 }
