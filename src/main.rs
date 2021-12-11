@@ -1,5 +1,5 @@
-mod util;
 mod solutions;
+mod util;
 
 use color_eyre::eyre::Result;
 

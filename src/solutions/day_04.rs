@@ -148,7 +148,7 @@ impl Day for Day04 {
         let mut last_draw = 0;
 
         'draw: for current_draw in self.draw.iter() {
-            for (i, board) in self.boards.iter().enumerate() { 
+            for (i, board) in self.boards.iter().enumerate() {
                 let bingo = self.iterate_board(board, &mut marker[i], current_draw);
 
                 if bingo && !winner_boards.contains(board) {
@@ -167,7 +167,11 @@ impl Day for Day04 {
 
         let sum_unmarked = self.sum_unmarked(
             last_board,
-            &marker[self.boards.iter().position(|board| board == last_board).unwrap()],
+            &marker[self
+                .boards
+                .iter()
+                .position(|board| board == last_board)
+                .unwrap()],
         );
 
         println!(

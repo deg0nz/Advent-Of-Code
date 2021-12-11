@@ -16,7 +16,10 @@ impl Day01 {
         let util = Util::new();
         let input = util.read_input("day_01.txt")?;
 
-        let data = input.lines().map(|line| line.parse::<u32>().unwrap()).collect();
+        let data = input
+            .lines()
+            .map(|line| line.parse::<u32>().unwrap())
+            .collect();
 
         Ok(Self { data })
     }
@@ -31,7 +34,7 @@ impl Day01 {
 }
 
 impl Day for Day01 {
-    fn a(&self) -> Result<()>{
+    fn a(&self) -> Result<()> {
         // dbg!(&self.data);
         let mut increase_counter: u32 = 0;
         let mut iter = self.data.iter().peekable();

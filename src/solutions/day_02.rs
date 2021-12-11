@@ -1,6 +1,6 @@
 use color_eyre::eyre::Result;
 
-use crate::util::{Util, Day};
+use crate::util::{Day, Util};
 
 pub struct Day02 {
     data: String,
@@ -39,7 +39,7 @@ impl Day for Day02 {
                 "forward" => horizontal += values.1,
                 "up" => depth -= values.1,
                 "down" => depth += values.1,
-                _ => unreachable!()
+                _ => unreachable!(),
             }
         }
 
@@ -57,13 +57,13 @@ impl Day for Day02 {
             let values = Day02::parse_line_into_values(&line.to_string())?;
 
             match values.0.as_str() {
-                "forward" => { 
+                "forward" => {
                     horizontal += values.1;
                     depth += aim * values.1;
-                },
+                }
                 "up" => aim -= values.1,
                 "down" => aim += values.1,
-                _ => unreachable!()
+                _ => unreachable!(),
             }
         }
 
