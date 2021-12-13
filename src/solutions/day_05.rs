@@ -1,8 +1,12 @@
+use std::borrow::Borrow;
+
 use color_eyre::eyre::Result;
 
 use crate::util::Day;
 
 use super::super::util::Util;
+
+const DIMENSION: usize = 1000;
 
 #[derive(Debug, Clone)]
 struct Line {
@@ -14,7 +18,7 @@ struct Line {
 
 pub struct Day05 {
     lines: Vec<Line>,
-    matrix: Vec<[u32; 1000]>,
+    matrix: Vec<[usize; DIMENSION]>,
 }
 
 impl Day05 {
@@ -42,9 +46,9 @@ impl Day05 {
         // dbg!(x_max);
         // dbg!(y_max);
 
-        let mut matrix: Vec<[u32; 1000]> = Vec::new();
-        for _i in 0..1000 {
-            matrix.push([0u32; 1000]);
+        let mut matrix: Vec<[usize; DIMENSION]> = Vec::new();
+        for _i in 0..DIMENSION {
+            matrix.push([0usize; DIMENSION]);
         }
 
         Ok(Self { lines, matrix })
@@ -71,18 +75,40 @@ impl Day05 {
         let range = if start < end {
             (start..=end).collect::<Vec<usize>>()
         } else {
-            (end..=start).collect::<Vec<usize>>()
+            (end..=start).rev().collect::<Vec<usize>>()
         };
 
         range
     }
-}
 
-impl Day for Day05 {
-    fn a(&self) -> Result<()> {
+    fn count_overlaps(matrix: &Vec<[usize; DIMENSION]>) -> i32 {
         let mut overlaps = 0;
-        let mut matrix = self.matrix.clone();
 
+        for x in 0..matrix.len() {
+            for y in 0..matrix.len() {
+                if matrix[x][y] > 1 {
+                    overlaps += 1;
+                }
+            }
+        }
+
+        overlaps
+    }
+
+    fn _print_matrix(matrix: &Vec<[usize; DIMENSION]>) {
+        for x in 0..matrix.len() {
+            for y in 0..matrix.len() {
+                if matrix[x][y] > 0 {
+                    print!("{}", matrix[x][y]);
+                } else {
+                    print!(".");
+                }
+            }
+            println!();
+        }
+    }
+
+    fn draw_lines_hori_vert(&self, matrix: &mut Vec<[usize; DIMENSION]>) {
         let lines_horizontal_vertical = self
             .lines
             .iter()
@@ -102,21 +128,55 @@ impl Day for Day05 {
                 }
             }
         });
+    }
 
-        for x in 0..matrix.len() {
-            for y in 0..matrix.len() {
-                if matrix[x][y] > 1 {
-                    overlaps += 1;
-                }
+    fn draw_lines_diagonal(&self, matrix: &mut Vec<[usize; DIMENSION]>) {
+        let lines_diagonal = self
+            .lines
+            .iter()
+            .filter(|line| line.y1 != line.y2 && line.x1 != line.x2)
+            .collect::<Vec<&Line>>();
+
+        lines_diagonal.iter().for_each(|line| {
+            let range_x = Day05::get_range(line.x1, line.x2);
+            let range_y = Day05::get_range(line.y1, line.y2);
+
+            for i in 0..range_x.len() {
+                let x = range_x[i];
+                let y = range_y[i];
+                matrix[x][y] += 1;
             }
-        }
+        });
+    }
+}
 
-        println!("Overlaps: {}", overlaps);
+impl Day for Day05 {
+    fn a(&self) -> Result<()> {
+        let mut matrix = self.matrix.clone();
+
+        self.draw_lines_hori_vert(&mut matrix);
+
+        // Day05::_print_matrix(&matrix);
+
+        let overlaps = Day05::count_overlaps(&matrix);
+
+        println!("Overlaps Horizontal & Vertical: {}", overlaps);
 
         Ok(())
     }
 
     fn b(&self) -> Result<()> {
-        todo!()
+        let mut matrix = self.matrix.clone();
+
+        self.draw_lines_hori_vert(&mut matrix);
+        self.draw_lines_diagonal(&mut matrix);
+
+        // Day05::_print_matrix(&matrix);
+
+        let overlaps = Day05::count_overlaps(&matrix);
+
+        println!("Overlaps all: {}", overlaps);
+
+        Ok(())
     }
 }
