@@ -68,6 +68,7 @@ impl Day for Day03 {
         Ok(())
     }
 
+    //TODO: This is not solved yet!
     fn b(&self) -> Result<()> {
         let line_len = self.data.lines().next().unwrap().len();
         let mut oxygen_generator_rating_filter = self.data.lines().collect::<Vec<&str>>();

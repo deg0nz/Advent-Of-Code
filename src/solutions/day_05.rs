@@ -1,5 +1,3 @@
-use std::borrow::Borrow;
-
 use color_eyre::eyre::Result;
 
 use crate::util::Day;
