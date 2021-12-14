@@ -58,7 +58,7 @@ impl Day for Day06 {
             // Day06::print_day(&fish_list, &day);
         }
 
-        println!("Number of fish after {} days: {}", days, fish_list.len());
+        println!("[A] Number of fish after {} days: {}", days, fish_list.len());
 
         Ok(())
     }
@@ -90,7 +90,7 @@ impl Day for Day06 {
 
         let number_of_fish = age_map.iter().sum::<u64>();
 
-        println!("Number of fish after {} days: {}", days, number_of_fish);
+        println!("[B] Number of fish after {} days: {}", days, number_of_fish);
 
         Ok(())
     }

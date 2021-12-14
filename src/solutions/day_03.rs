@@ -60,10 +60,10 @@ impl Day for Day03 {
         let gamma = self.string_to_u32(gamma_bits.as_str())?;
         let epsilon = !gamma ^ 0xFFFFF000;
 
-        println!("Gamma: {:b} ({})", gamma, gamma);
-        println!("Epsilon: {:b} ({})", epsilon, epsilon);
+        println!("[A] Gamma: {:b} ({})", gamma, gamma);
+        println!("[A] Epsilon: {:b} ({})", epsilon, epsilon);
         // Power consumption: 1131506
-        println!("Power consumption: {}", gamma * epsilon);
+        println!("[A] Power consumption: {}", gamma * epsilon);
 
         Ok(())
     }
@@ -113,15 +113,15 @@ impl Day for Day03 {
         // dbg!(co2_scrubber_rating_filter);
 
         println!(
-            "Oxygen generator rating: {} ({:b})",
+            "[B] Oxygen generator rating: {} ({:b})",
             oxygen_generator_rating, oxygen_generator_rating
         );
         println!(
-            "CO2 scrubber rating: {} ({:b})",
+            "[B] CO2 scrubber rating: {} ({:b})",
             co2_scrubber_rating, co2_scrubber_rating
         );
         println!(
-            "Life support rating: {}",
+            "[B] Life support rating: {}",
             oxygen_generator_rating * co2_scrubber_rating
         );
 

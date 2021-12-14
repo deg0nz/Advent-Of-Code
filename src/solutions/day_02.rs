@@ -43,7 +43,7 @@ impl Day for Day02 {
             }
         }
 
-        println!("Multiplied A: {}", depth * horizontal);
+        println!("[A] Multiplied: {}", depth * horizontal);
 
         Ok(())
     }
@@ -67,7 +67,7 @@ impl Day for Day02 {
             }
         }
 
-        println!("Multiplied B: {}", depth * horizontal);
+        println!("[B] Multiplied: {}", depth * horizontal);
 
         Ok(())
     }

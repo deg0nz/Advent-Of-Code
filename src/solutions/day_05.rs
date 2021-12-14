@@ -160,7 +160,7 @@ impl Day for Day05 {
 
         let overlaps = Day05::count_overlaps(&matrix);
 
-        println!("Overlaps Horizontal & Vertical: {}", overlaps);
+        println!("[A] Overlaps Horizontal & Vertical: {}", overlaps);
 
         Ok(())
     }
@@ -175,7 +175,7 @@ impl Day for Day05 {
 
         let overlaps = Day05::count_overlaps(&matrix);
 
-        println!("Overlaps all: {}", overlaps);
+        println!("[B] Overlaps all: {}", overlaps);
 
         Ok(())
     }

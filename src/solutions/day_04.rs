@@ -52,7 +52,7 @@ impl Day04 {
         })
     }
 
-    fn get_board_from_lines(board_str: &[&str]) -> [[u32; 5]; 5] {
+    fn _get_board_from_lines(board_str: &[&str]) -> [[u32; 5]; 5] {
         let mut board = [[0u32; 5]; 5];
 
         board_str.into_iter().enumerate().for_each(|(row, line)| {
@@ -124,9 +124,9 @@ impl Day for Day04 {
                 if bingo {
                     let sum_unmarked = self.sum_unmarked(board, &marker[i]);
 
-                    println!("BINGO! Winner Number: {}", current_draw);
+                    println!("[A] BINGO! Winner Number: {}", current_draw);
                     println!(
-                        "Score: {} ({}*{})",
+                        "[A] Score: {} ({}*{})",
                         current_draw * sum_unmarked,
                         current_draw,
                         sum_unmarked
@@ -175,7 +175,7 @@ impl Day for Day04 {
         );
 
         println!(
-            "Score: {} ({}*{})",
+            "[B] Score: {} ({}*{})",
             last_draw * sum_unmarked,
             last_draw,
             sum_unmarked

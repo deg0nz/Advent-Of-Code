@@ -47,7 +47,7 @@ impl Day for Day01 {
             }
         }
 
-        println!("Depth A: {}", increase_counter);
+        println!("[A] Depth: {}", increase_counter);
 
         Ok(())
     }
@@ -67,7 +67,7 @@ impl Day for Day01 {
             };
         }
 
-        println!("Depth B: {}", increase_counter);
+        println!("[B] Depth: {}", increase_counter);
 
         Ok(())
     }
