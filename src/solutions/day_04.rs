@@ -52,7 +52,7 @@ impl Day04 {
         })
     }
 
-    fn _get_board_from_lines(board_str: &[&str]) -> [[u32; 5]; 5] {
+    fn get_board_from_lines(board_str: &[&str]) -> [[u32; 5]; 5] {
         let mut board = [[0u32; 5]; 5];
 
         board_str.into_iter().enumerate().for_each(|(row, line)| {
