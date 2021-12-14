@@ -28,9 +28,13 @@ fn main() -> Result<()> {
     // day_05.a()?;
     // day_05.b()?;
 
-    let day_06 = solutions::day_06::Day06::new()?;
-    day_06.a()?;
-    day_06.b()?;
+    // let day_06 = solutions::day_06::Day06::new()?;
+    // day_06.a()?;
+    // day_06.b()?;
+
+    let day_07 = solutions::day_07::Day07::new()?;
+    day_07.a()?;
+    // day_07.b()?;
 
     Ok(())
 }

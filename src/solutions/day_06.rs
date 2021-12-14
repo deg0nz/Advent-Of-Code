@@ -30,8 +30,6 @@ impl Day06 {
         fish_list.iter().for_each(|f| print!("{},", f));
         println!();
     }
-
-
 }
 
 impl Day for Day06 {
