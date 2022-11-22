@@ -5,7 +5,7 @@ use crate::util::Day;
 use super::super::util::Util;
 
 pub struct Day07 {
-    positions: Vec<u32>,
+    positions: Vec<i32>,
 }
 
 impl Day07 {
@@ -19,13 +19,13 @@ impl Day07 {
         let positions = data
             .split(",")
             .into_iter()
-            .map(|val| val.parse::<u32>().unwrap())
-            .collect::<Vec<u32>>();
+            .map(|val| val.parse::<i32>().unwrap())
+            .collect::<Vec<i32>>();
 
         Ok(Self { positions })
     }
 
-    fn median(numbers: &mut Vec<u32>) -> u32 {
+    fn median(numbers: &mut Vec<i32>) -> i32 {
         numbers.sort();
         let mid = numbers.len() / 2;
         numbers[mid]
@@ -40,7 +40,7 @@ impl Day for Day07 {
         let mut fuel_cost: i32 = 0;
 
         self.positions.iter().for_each(|pos| {
-            fuel_cost += (*pos as i32 - median as i32).abs()
+            fuel_cost += (*pos - median).abs()
         });
 
         println!("[A] Median: {} | Fuel cost: {}", median, fuel_cost);
@@ -49,6 +49,25 @@ impl Day for Day07 {
     }
 
     fn b(&self) -> Result<()> {
-        todo!()
+        let mut min_fuel = std::i32::MAX;
+
+        self.positions.iter().enumerate().for_each(|(i, pos_outer)| {
+            let mut current_fuel = 0;
+
+            self.positions.iter().for_each(|pos_inner| {
+                let diff = (i as i32 - pos_inner).abs();
+                let fuel: i32 = (diff * (diff + 1) / 2) as i32;
+
+                current_fuel += fuel;
+            });
+
+            if current_fuel < min_fuel {
+                min_fuel = current_fuel;
+            }
+        });
+
+        println!("[B] Fuel cost: {}", min_fuel);
+
+        Ok(())
     }
 }

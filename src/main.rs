@@ -34,7 +34,7 @@ fn main() -> Result<()> {
 
     let day_07 = solutions::day_07::Day07::new()?;
     day_07.a()?;
-    // day_07.b()?;
+    day_07.b()?;
 
     Ok(())
 }
