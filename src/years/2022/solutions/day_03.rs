@@ -16,10 +16,10 @@ impl Day03 {
         Ok(Self { data: input })
     }
 
-    fn find_common_char(rucksack_content: &str) -> char {
+    fn find_common_item_in_rucksack(rucksack_content: &str) -> char {
         let (compartment_a, compartment_b) = rucksack_content.split_at(rucksack_content.len() / 2);
 
-        let common_char = compartment_a
+        let common_item = compartment_a
             .chars()
             .into_iter()
             .find(|&c| compartment_b.contains(c))
@@ -29,7 +29,21 @@ impl Day03 {
             .nth(0)
             .unwrap();
 
-        common_char
+        common_item
+    }
+
+    fn find_common_item_between_elves(rucksacks: &[&str]) -> char {
+        let common_item = rucksacks[0]
+            .chars()
+            .into_iter()
+            .find(|&c| rucksacks[1].contains(c) && rucksacks[2].contains(c))
+            .unwrap()
+            .to_string()
+            .chars()
+            .nth(0)
+            .unwrap();
+
+        common_item
     }
 
     fn get_item_priority(item: char) -> Result<u32> {
@@ -58,7 +72,7 @@ impl Day for Day03 {
         let mut total_prio: u32 = 0;
 
         self.data.lines().for_each(|rucksack_content| {
-            let common_item = Day03::find_common_char(rucksack_content);
+            let common_item = Day03::find_common_item_in_rucksack(rucksack_content);
             let item_prio = Day03::get_item_priority(common_item).ok().unwrap();
             total_prio += item_prio
         });
@@ -67,7 +81,18 @@ impl Day for Day03 {
     }
 
     fn b(&self) -> Result<String> {
-        todo!()
+        let mut total_prio: u32 = 0;
+        self.data
+            .lines()
+            .collect::<Vec<&str>>()
+            .chunks(3)
+            .for_each(|group| {
+                let common_item = Day03::find_common_item_between_elves(group);
+                let item_prio = Day03::get_item_priority(common_item).ok().unwrap();
+                total_prio += item_prio;
+            });
+
+        Ok(total_prio.to_string())
     }
 
     fn print_title(&self) {

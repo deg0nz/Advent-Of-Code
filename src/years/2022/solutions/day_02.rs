@@ -45,33 +45,27 @@ impl Day02 {
 
         match needed_outcome {
             // Loose
-            "X" => {
-                match opponents_choice {
-                    "A" => my_choice = "Z",
-                    "B" => my_choice = "X",
-                    "C" => my_choice = "Y",
-                    &_ => unreachable!()
-                }
+            "X" => match opponents_choice {
+                "A" => my_choice = "Z",
+                "B" => my_choice = "X",
+                "C" => my_choice = "Y",
+                &_ => unreachable!(),
             },
             // Draw
-            "Y" => {
-                match opponents_choice {
-                    "A" => my_choice = "X",
-                    "B" => my_choice = "Y",
-                    "C" => my_choice = "Z",
-                    &_ => unreachable!()
-                }
+            "Y" => match opponents_choice {
+                "A" => my_choice = "X",
+                "B" => my_choice = "Y",
+                "C" => my_choice = "Z",
+                &_ => unreachable!(),
             },
             // Win
-            "Z" => {
-                match opponents_choice {
-                    "A" => my_choice = "Y",
-                    "B" => my_choice = "Z",
-                    "C" => my_choice = "X",
-                    &_ => unreachable!()
-                }
+            "Z" => match opponents_choice {
+                "A" => my_choice = "Y",
+                "B" => my_choice = "Z",
+                "C" => my_choice = "X",
+                &_ => unreachable!(),
             },
-            &_ => unreachable!()
+            &_ => unreachable!(),
         }
 
         (my_choice, needed_outcome)
@@ -92,13 +86,11 @@ impl Day for Day02 {
     fn b(&self) -> Result<String> {
         let mut total_score = 0;
 
-        self.data
-            .lines()
-            .for_each(| round | {
-                let (my_choice, needed_outcome) = self.get_my_choice_and_needed_outcome(round);
-                let played_round = round.replace(needed_outcome, my_choice);
-                total_score += self.get_score_for_round(&played_round);
-            });
+        self.data.lines().for_each(|round| {
+            let (my_choice, needed_outcome) = self.get_my_choice_and_needed_outcome(round);
+            let played_round = round.replace(needed_outcome, my_choice);
+            total_score += self.get_score_for_round(&played_round);
+        });
 
         Ok(total_score.to_string())
     }
