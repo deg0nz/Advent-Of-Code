@@ -1,5 +1,8 @@
-mod solutions;
+// mod solutions;
 mod util;
+mod years;
+
+use years::twenty_22 as solutions;
 
 use color_eyre::eyre::Result;
 
@@ -32,9 +35,20 @@ fn main() -> Result<()> {
     // day_06.a()?;
     // day_06.b()?;
 
-    let day_07 = solutions::day_07::Day07::new()?;
-    day_07.a()?;
-    day_07.b()?;
+    // let day_07 = solutions::day_07::Day07::new()?;
+    // day_07.a()?;
+    // day_07.b()?;
+
+    // 2022
+
+    let day01 = solutions::day_01::Day01::new()?;
+    day01.print()?;
+
+    let day02 = solutions::day_02::Day02::new()?;
+    day02.print()?;
+
+    let day03 = solutions::day_03::Day03::new()?;
+    day03.print()?;
 
     Ok(())
 }
