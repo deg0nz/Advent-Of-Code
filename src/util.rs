@@ -3,26 +3,6 @@ use regex::Regex;
 use std::fs;
 use std::path::PathBuf;
 
-pub struct Year {
-    pub number: u32,
-    pub days: Vec<Box<dyn Day>>,
-}
-
-impl Year {
-    pub fn new(year: u32) -> Year {
-        Self {
-            number: year,
-            days: Vec::new(),
-        }
-    }
-
-    pub fn print(&self) {
-        println!("");
-        println!("==== {} ====", self.number);
-        println!("");
-    }
-}
-
 pub trait Day {
     fn a(&self) -> Result<String>;
     fn b(&self) -> Result<String>;

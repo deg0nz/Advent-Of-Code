@@ -1,4 +1,3 @@
-use super::super::super::util::InputReader;
 use crate::util::Day;
 use color_eyre::eyre::Result;
 
@@ -8,8 +7,7 @@ pub struct Day01 {
 
 impl Day01 {
     pub fn new() -> Result<Day01> {
-        let util = InputReader::new(2022, 1, false);
-        let input = util.read()?;
+        let input = Day01::get_input(2022, 1, false)?;
 
         let mut elf_supplies: Vec<u32> = Vec::new();
         let mut current_supply_counter = 0;

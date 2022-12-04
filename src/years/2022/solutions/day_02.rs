@@ -1,4 +1,3 @@
-use super::super::super::util::InputReader;
 use crate::util::Day;
 use color_eyre::eyre::Result;
 
@@ -8,8 +7,7 @@ pub struct Day02 {
 
 impl Day02 {
     pub fn new() -> Result<Day02> {
-        let util = InputReader::new(2022, 2, false);
-        let input = util.read()?;
+        let input = Day02::get_input(2022, 2, false)?;
 
         Ok(Self { data: input })
     }
