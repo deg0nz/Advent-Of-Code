@@ -50,6 +50,7 @@ pub trait Day {
     fn run(&self) -> Result<()> {
         println!("");
         println!("{}", self.get_title());
+        println!("");
         println!("[A]: {}", self.a()?);
         println!("[B]: {}", self.b()?);
         Ok(())
