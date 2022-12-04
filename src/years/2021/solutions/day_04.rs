@@ -1,8 +1,5 @@
 use color_eyre::eyre::Result;
-
 use crate::util::Day;
-
-use super::super::util::Util;
 
 pub struct Day04 {
     draw: Vec<u32>,
@@ -12,11 +9,7 @@ pub struct Day04 {
 
 impl Day04 {
     pub fn new() -> Result<Day04> {
-        println!("");
-        println!("========= Day 04: Giant Squid =========");
-
-        let util = Util::new();
-        let input = util.read_input("day_04.txt")?;
+        let input = Day04::get_input(2021, 4, false)?;
 
         let draw = input
             .lines()
@@ -114,8 +107,9 @@ impl Day04 {
 }
 
 impl Day for Day04 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         let mut marker = self.boards_marker.clone();
+        let mut bingo_winner: u32 = 0;
 
         'draw: for current_draw in self.draw.iter() {
             for (i, board) in self.boards.iter().enumerate() {
@@ -132,15 +126,17 @@ impl Day for Day04 {
                         sum_unmarked
                     );
 
+                    bingo_winner = *current_draw;
+
                     break 'draw;
                 }
             }
         }
 
-        Ok(())
+        Ok(bingo_winner.to_string())
     }
 
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let mut marker = self.boards_marker.clone();
         let mut winner_boards: Vec<[[u32; 5]; 5]> = Vec::new();
         let mut winner_boards_i: Vec<u32> = Vec::new();
@@ -174,13 +170,17 @@ impl Day for Day04 {
                 .unwrap()],
         );
 
-        println!(
-            "[B] Score: {} ({}*{})",
+        let print = format!(
+            "Score: {} ({}*{})",
             last_draw * sum_unmarked,
             last_draw,
             sum_unmarked
         );
 
-        Ok(())
+        Ok(print)
+    }
+
+    fn get_title(&self) -> &str {
+        "--- Day 4: Giant Squid ---"
     }
 }

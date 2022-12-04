@@ -8,7 +8,7 @@ pub struct Day01 {
 
 impl Day01 {
     pub fn new() -> Result<Day01> {
-        let util = InputReader::new(2022, "01".to_string(), false);
+        let util = InputReader::new(2022, 1, false);
         let input = util.read()?;
 
         let mut elf_supplies: Vec<u32> = Vec::new();
@@ -42,7 +42,7 @@ impl Day for Day01 {
         Ok(supply_sum_top_3.to_string())
     }
 
-    fn print_title(&self) {
-        println!("--- Day 1: Calorie Counting ---");
+    fn get_title(&self) -> &str {
+        "--- Day 1: Calorie Counting ---"
     }
 }

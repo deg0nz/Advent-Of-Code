@@ -8,7 +8,7 @@ pub struct Day02 {
 
 impl Day02 {
     pub fn new() -> Result<Day02> {
-        let util = InputReader::new(2022, "02".to_string(), false);
+        let util = InputReader::new(2022, 2, false);
         let input = util.read()?;
 
         Ok(Self { data: input })
@@ -95,7 +95,7 @@ impl Day for Day02 {
         Ok(total_score.to_string())
     }
 
-    fn print_title(&self) {
-        println!("--- Day 2: Rock Paper Scissors ---")
+    fn get_title(&self) -> &str {
+        "--- Day 2: Rock Paper Scissors ---"
     }
 }

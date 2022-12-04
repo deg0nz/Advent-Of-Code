@@ -1,8 +1,5 @@
 use color_eyre::eyre::Result;
-
 use crate::util::Day;
-
-use super::super::util::Util;
 
 const DIMENSION: usize = 1000;
 
@@ -21,11 +18,7 @@ pub struct Day05 {
 
 impl Day05 {
     pub fn new() -> Result<Day05> {
-        println!("");
-        println!("========= Day 05: Hydrothermal Venture =========");
-
-        let util = Util::new();
-        let data = util.read_input("day_05.txt")?;
+        let data = Day05::get_input(2021, 5, false)?;
         let lines = data
             .lines()
             .map(|line| Day05::parse_input_line(line))
@@ -151,7 +144,7 @@ impl Day05 {
 }
 
 impl Day for Day05 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         let mut matrix = self.matrix.clone();
 
         self.draw_lines_horizontal_vertical(&mut matrix);
@@ -159,13 +152,12 @@ impl Day for Day05 {
         // Day05::_print_matrix(&matrix);
 
         let overlaps = Day05::count_overlaps(&matrix);
+        let print = format!("Overlaps Horizontal & Vertical: {}", overlaps);
 
-        println!("[A] Overlaps Horizontal & Vertical: {}", overlaps);
-
-        Ok(())
+        Ok(print)
     }
 
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let mut matrix = self.matrix.clone();
 
         self.draw_lines_horizontal_vertical(&mut matrix);
@@ -174,9 +166,12 @@ impl Day for Day05 {
         // Day05::_print_matrix(&matrix);
 
         let overlaps = Day05::count_overlaps(&matrix);
+        let print = format!("Overlaps all: {}", overlaps);
 
-        println!("[B] Overlaps all: {}", overlaps);
+        Ok(print)
+    }
 
-        Ok(())
+    fn get_title(&self) -> &str {
+        "--- Day 5: Hydrothermal Venture ---"
     }
 }

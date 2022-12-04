@@ -1,6 +1,4 @@
-use std::ops::{Add, Mul};
-
-use super::super::super::util::InputReader;
+use std::ops::Add;
 use crate::util::Day;
 use color_eyre::eyre::Result;
 
@@ -10,8 +8,7 @@ pub struct Day03 {
 
 impl Day03 {
     pub fn new() -> Result<Day03> {
-        let util = InputReader::new(2022, "03".to_string(), false);
-        let input = util.read()?;
+        let input = Day03::get_input(2022, 3, false)?;
 
         Ok(Self { data: input })
     }
@@ -95,7 +92,7 @@ impl Day for Day03 {
         Ok(total_prio.to_string())
     }
 
-    fn print_title(&self) {
-        println!("--- Day 3: Rucksack Reorganization ---");
+    fn get_title(&self) -> &str {
+        "--- Day 3: Rucksack Reorganization ---"
     }
 }

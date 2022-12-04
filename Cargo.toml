@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 color-eyre = "0.6"
+lexopt = "0.2.1"
+regex = "1.7.0"

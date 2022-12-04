@@ -2,20 +2,13 @@ use color_eyre::eyre::Result;
 
 use crate::util::Day;
 
-use super::super::util::Util;
-
 pub struct Day06 {
     init_state: Vec<u8>,
 }
 
 impl Day06 {
     pub fn new() -> Result<Day06> {
-        println!("");
-        println!("========= Day 06: Lanternfish =========");
-
-        let util = Util::new();
-        let data = util.read_input("day_06.txt")?;
-
+        let data = Day06::get_input(2021, 6, false)?;
         let init_state = data
             .split(",")
             .into_iter()
@@ -33,7 +26,7 @@ impl Day06 {
 }
 
 impl Day for Day06 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         let days = 80;
         let mut fish_list = self.init_state.clone();
 
@@ -56,12 +49,12 @@ impl Day for Day06 {
             // Day06::print_day(&fish_list, &day);
         }
 
-        println!("[A] Number of fish after {} days: {}", days, fish_list.len());
+        let print = format!("Number of fish after {} days: {}", days, fish_list.len());
 
-        Ok(())
+        Ok(print)
     }
 
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let days = 256;
         let mut age_map: Vec<u64> = Vec::new();
 
@@ -87,9 +80,12 @@ impl Day for Day06 {
         }
 
         let number_of_fish = age_map.iter().sum::<u64>();
+        let print = format!("Number of fish after {} days: {}", days, number_of_fish);
 
-        println!("[B] Number of fish after {} days: {}", days, number_of_fish);
+        Ok(print)
+    }
 
-        Ok(())
+    fn get_title(&self) -> &str {
+        "--- Day 6: Lanternfish ---"
     }
 }

@@ -1,6 +1,5 @@
 use color_eyre::eyre::Result;
-
-use crate::util::{Day, Util};
+use crate::util::Day;
 
 pub struct Day02 {
     data: String,
@@ -8,12 +7,7 @@ pub struct Day02 {
 
 impl Day02 {
     pub fn new() -> Result<Day02> {
-        println!("");
-        println!("========= Day 02: Dive! =========");
-
-        let util = Util::new();
-        let data = util.read_input("day_02.txt")?;
-
+        let data = Day02::get_input(2021, 2, false)?;
         Ok(Self { data })
     }
 
@@ -28,7 +22,7 @@ impl Day02 {
 }
 
 impl Day for Day02 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         let mut horizontal: u32 = 0;
         let mut depth: u32 = 0;
 
@@ -43,12 +37,10 @@ impl Day for Day02 {
             }
         }
 
-        println!("[A] Multiplied: {}", depth * horizontal);
-
-        Ok(())
+        Ok((depth * horizontal).to_string())
     }
 
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let mut horizontal: u32 = 0;
         let mut depth: u32 = 0;
         let mut aim: u32 = 0;
@@ -67,8 +59,10 @@ impl Day for Day02 {
             }
         }
 
-        println!("[B] Multiplied: {}", depth * horizontal);
+        Ok((depth * horizontal).to_string())
+    }
 
-        Ok(())
+    fn get_title(&self) -> &str {
+        "--- Day 2: Dive! ---"
     }
 }

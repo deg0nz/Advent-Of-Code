@@ -1,6 +1,5 @@
+use crate::util::Day;
 use color_eyre::eyre::Result;
-
-use crate::util::{Day, Util};
 
 pub struct Day03 {
     data: String,
@@ -8,11 +7,7 @@ pub struct Day03 {
 
 impl Day03 {
     pub fn new() -> Result<Day03> {
-        println!("");
-        println!("========= Day 03: Binary Diagnostic =========");
-
-        let util = Util::new();
-        let data = util.read_input("day_03.txt")?;
+        let data = Day03::get_input(2021, 3, false)?;
 
         Ok(Self { data })
     }
@@ -40,7 +35,7 @@ impl Day03 {
 }
 
 impl Day for Day03 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         let line_len = self.data.lines().next().unwrap().len();
         let mut bits_count: Vec<(u32, u32)> = Vec::new();
         let mut gamma_bits = String::new();
@@ -60,16 +55,20 @@ impl Day for Day03 {
         let gamma = self.string_to_u32(gamma_bits.as_str())?;
         let epsilon = !gamma ^ 0xFFFFF000;
 
-        println!("[A] Gamma: {:b} ({})", gamma, gamma);
-        println!("[A] Epsilon: {:b} ({})", epsilon, epsilon);
-        // Power consumption: 1131506
-        println!("[A] Power consumption: {}", gamma * epsilon);
+        let solution = format!(
+            "Gamma: {:b} ({}) | Epsilon: {:b} ({}) | Power consumption: {}",
+            gamma,
+            gamma,
+            epsilon,
+            epsilon,
+            gamma * epsilon
+        );
 
-        Ok(())
+        Ok(solution)
     }
 
     //TODO: This is not solved yet!
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let line_len = self.data.lines().next().unwrap().len();
         let mut oxygen_generator_rating_filter = self.data.lines().collect::<Vec<&str>>();
         let mut co2_scrubber_rating_filter = oxygen_generator_rating_filter.clone();
@@ -112,19 +111,12 @@ impl Day for Day03 {
         // dbg!(oxygen_generator_rating_filter);
         // dbg!(co2_scrubber_rating_filter);
 
-        println!(
-            "[B] Oxygen generator rating: {} ({:b})",
-            oxygen_generator_rating, oxygen_generator_rating
-        );
-        println!(
-            "[B] CO2 scrubber rating: {} ({:b})",
-            co2_scrubber_rating, co2_scrubber_rating
-        );
-        println!(
-            "[B] Life support rating: {}",
-            oxygen_generator_rating * co2_scrubber_rating
-        );
+        let solution = format!("Oxygen generator rating: {} ({:b}) | CO2 scrubber rating: {} ({:b}) | Life support rating: {}", oxygen_generator_rating, oxygen_generator_rating, co2_scrubber_rating, co2_scrubber_rating, oxygen_generator_rating * co2_scrubber_rating);
 
-        Ok(())
+        Ok(solution)
+    }
+
+    fn get_title(&self) -> &str {
+        "--- Day 3: Binary Diagnostic ---"
     }
 }

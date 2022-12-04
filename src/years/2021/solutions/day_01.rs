@@ -1,8 +1,5 @@
 use color_eyre::eyre::Result;
-
 use crate::util::Day;
-
-use super::super::util::Util;
 
 pub struct Day01 {
     data: Vec<u32>,
@@ -10,12 +7,7 @@ pub struct Day01 {
 
 impl Day01 {
     pub fn new() -> Result<Day01> {
-        println!("");
-        println!("========= Day 01: Sonar Sweep =========");
-
-        let util = Util::new();
-        let input = util.read_input("day_01.txt")?;
-
+        let input = Day01::get_input(2021, 1, false)?;
         let data = input
             .lines()
             .map(|line| line.parse::<u32>().unwrap())
@@ -34,7 +26,7 @@ impl Day01 {
 }
 
 impl Day for Day01 {
-    fn a(&self) -> Result<()> {
+    fn a(&self) -> Result<String> {
         // dbg!(&self.data);
         let mut increase_counter: u32 = 0;
         let mut iter = self.data.iter().peekable();
@@ -47,12 +39,10 @@ impl Day for Day01 {
             }
         }
 
-        println!("[A] Depth: {}", increase_counter);
-
-        Ok(())
+        Ok(increase_counter.to_string())
     }
 
-    fn b(&self) -> Result<()> {
+    fn b(&self) -> Result<String> {
         let mut increase_counter: u32 = 0;
         let mut windows = self.data.windows(3).peekable();
 
@@ -67,8 +57,10 @@ impl Day for Day01 {
             };
         }
 
-        println!("[B] Depth: {}", increase_counter);
+        Ok(increase_counter.to_string())
+    }
 
-        Ok(())
+    fn get_title(&self) -> &str {
+        "--- Day 1: Sonar Sweep ---"
     }
 }

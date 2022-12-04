@@ -8,7 +8,7 @@ pub struct Day04 {
 
 impl Day04 {
     pub fn new() -> Result<Day04> {
-        let util = InputReader::new(2022, "04".to_string(), false);
+        let util = InputReader::new(2022, 4, false);
         let input = util.read()?;
 
         Ok(Self { data: input })
@@ -39,8 +39,6 @@ impl Day04 {
         let bigger;
         let smaller;
 
-        // Determine which range is bigger,
-        // the bigger range needs to be substracted from smaller range
         if (left.1 - left.0) >= (right.1 - right.0) {
             bigger = left;
             smaller = right;
@@ -55,10 +53,10 @@ impl Day04 {
     fn sections_overlap(sections: ((i32, i32), (i32, i32))) -> bool {
         let (left, right) = sections;
 
-        (left.0 >= right.0) && (left.0 <= right.1)
-            || (left.1 >= right.0) && (left.1 <= right.1)
-            || (right.0 >= left.0) && (right.0 <= left.1)
-            || (right.1 >= left.0) && (right.1 <= left.1)
+        (left.0 >= right.0) && (left.0 <= right.1)        // Left a is in range of right
+            || (left.1 >= right.0) && (left.1 <= right.1) // Left b is in range of right
+            || (right.0 >= left.0) && (right.0 <= left.1) // Right a is in range of left
+            || (right.1 >= left.0) && (right.1 <= left.1) // Right b is in range of left
     }
 }
 
@@ -87,7 +85,7 @@ impl Day for Day04 {
         Ok(num_overlaps.to_string())
     }
 
-    fn print_title(&self) {
-        println!("--- Day 4: Camp Cleanup ---")
+    fn get_title(&self) -> &str {
+        "--- Day 4: Camp Cleanup ---"
     }
 }
