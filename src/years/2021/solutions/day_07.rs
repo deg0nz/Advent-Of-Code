@@ -1,5 +1,5 @@
-use color_eyre::eyre::Result;
 use crate::util::Day;
+use color_eyre::eyre::Result;
 
 pub struct Day07 {
     positions: Vec<i32>,
@@ -32,9 +32,9 @@ impl Day for Day07 {
 
         let mut fuel_cost: i32 = 0;
 
-        self.positions.iter().for_each(|pos| {
-            fuel_cost += (*pos - median).abs()
-        });
+        self.positions
+            .iter()
+            .for_each(|pos| fuel_cost += (*pos - median).abs());
 
         let print = format!("Median: {} | Fuel cost: {}", median, fuel_cost);
 
@@ -44,20 +44,23 @@ impl Day for Day07 {
     fn b(&self) -> Result<String> {
         let mut min_fuel = std::i32::MAX;
 
-        self.positions.iter().enumerate().for_each(|(i, _pos_outer)| {
-            let mut current_fuel = 0;
+        self.positions
+            .iter()
+            .enumerate()
+            .for_each(|(i, _pos_outer)| {
+                let mut current_fuel = 0;
 
-            self.positions.iter().for_each(|pos_inner| {
-                let diff = (i as i32 - pos_inner).abs();
-                let fuel: i32 = (diff * (diff + 1) / 2) as i32;
+                self.positions.iter().for_each(|pos_inner| {
+                    let diff = (i as i32 - pos_inner).abs();
+                    let fuel: i32 = (diff * (diff + 1) / 2) as i32;
 
-                current_fuel += fuel;
+                    current_fuel += fuel;
+                });
+
+                if current_fuel < min_fuel {
+                    min_fuel = current_fuel;
+                }
             });
-
-            if current_fuel < min_fuel {
-                min_fuel = current_fuel;
-            }
-        });
 
         let print = format!("Fuel cost: {}", min_fuel);
 

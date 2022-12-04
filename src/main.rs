@@ -59,7 +59,6 @@ fn main() -> Result<()> {
     let args = cli::parse_args()?;
 
     if let Some(year) = args.year {
-
         let year_to_execute = years
             .iter()
             .find(|current_year| current_year.number == year)
@@ -94,7 +93,6 @@ fn main() -> Result<()> {
 
         std::process::exit(0);
     }
-
 
     let year_to_execute = years.last().unwrap();
     year_to_execute.print();

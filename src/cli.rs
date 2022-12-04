@@ -35,9 +35,5 @@ pub fn parse_args() -> Result<Args, lexopt::Error> {
         }
     }
 
-    Ok(Args {
-        year,
-        day,
-        all
-    })
+    Ok(Args { year, day, all })
 }

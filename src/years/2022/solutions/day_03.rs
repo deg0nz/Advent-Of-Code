@@ -1,6 +1,6 @@
-use std::ops::Add;
 use crate::util::Day;
 use color_eyre::eyre::Result;
+use std::ops::Add;
 
 pub struct Day03 {
     data: String,

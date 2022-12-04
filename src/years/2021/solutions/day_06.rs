@@ -59,7 +59,13 @@ impl Day for Day06 {
         let mut age_map: Vec<u64> = Vec::new();
 
         for i in 0..=8 {
-            age_map.push(self.init_state.iter().filter(|timer| **timer == i).collect::<Vec<&u8>>().len() as u64);
+            age_map.push(
+                self.init_state
+                    .iter()
+                    .filter(|timer| **timer == i)
+                    .collect::<Vec<&u8>>()
+                    .len() as u64,
+            );
         }
 
         for _day in 1..=days {
@@ -69,7 +75,7 @@ impl Day for Day06 {
                 if age == 0 {
                     newborn = age_map[0];
                 }
-                
+
                 if age < age_map.len() - 1 {
                     age_map[age] = age_map[age + 1];
                 }

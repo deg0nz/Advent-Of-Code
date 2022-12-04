@@ -1,5 +1,5 @@
-use color_eyre::eyre::Result;
 use crate::util::Day;
+use color_eyre::eyre::Result;
 
 const DIMENSION: usize = 1000;
 

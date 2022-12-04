@@ -1,5 +1,5 @@
-use color_eyre::eyre::Result;
 use crate::util::Day;
+use color_eyre::eyre::Result;
 
 pub struct Day02 {
     data: String,
