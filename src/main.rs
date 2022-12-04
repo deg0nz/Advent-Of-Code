@@ -50,5 +50,8 @@ fn main() -> Result<()> {
     let day03 = solutions::day_03::Day03::new()?;
     day03.print()?;
 
+    let day04 = solutions::day_04::Day04::new()?;
+    day04.print()?;
+
     Ok(())
 }
