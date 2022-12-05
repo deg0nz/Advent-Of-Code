@@ -11,18 +11,32 @@ struct Movement {
 
 pub struct Day05 {
     data: String,
+    split_line: usize,
 }
 
 impl Day05 {
     pub fn new() -> Result<Day05> {
         let input = util::read_input(2022, 5, false)?;
+        let split_line = input
+            .lines()
+            .enumerate()
+            .find_map(|(num, line)| {
+                if line.is_empty() {
+                    return Some(num);
+                }
+                None
+            })
+            .unwrap();
 
-        Ok(Self { data: input })
+        Ok(Self {
+            data: input,
+            split_line,
+        })
     }
 
     fn parse_stacks(&self) -> Result<Vec<Vec<char>>> {
         let input = self.data.lines().collect::<Vec<&str>>();
-        let matrix_input = &input[0..=7];
+        let matrix_input = &input[0..self.split_line - 1];
         let mut matrix: Vec<Vec<char>> = Vec::new();
 
         let column_indices = input
@@ -74,17 +88,14 @@ impl Day05 {
     }
 
     fn get_movements(&self) -> Vec<Movement> {
-        self
-            .data
+        self.data
             .lines()
-            .skip(10)
+            .skip(self.split_line + 1)
             .filter_map(|line| Some(Day05::parse_movement(line).unwrap()))
             .collect::<Vec<Movement>>()
     }
-}
 
-impl Day for Day05 {
-    fn a(&self) -> Result<String> {
+    fn move_crates(&self, cratemover9001: bool) -> Result<String> {
         let mut matrix = self.parse_stacks()?;
         let movements = self.get_movements();
 
@@ -94,33 +105,31 @@ impl Day for Day05 {
                 .drain((col_len - 1 - mv.amount)..)
                 .collect::<Vec<char>>();
 
-            removed.iter().rev().for_each(|c| {
-                matrix[mv.to].push(*c);
-            });
+            if cratemover9001 {
+                removed.iter().for_each(|c| {
+                    matrix[mv.to].push(*c);
+                });
+            } else {
+                removed.iter().rev().for_each(|c| {
+                    matrix[mv.to].push(*c);
+                });
+            }
         });
 
         let top_boxes: String = matrix.iter().map(|col| *col.last().unwrap()).collect();
 
         Ok(top_boxes)
     }
+}
+
+impl Day for Day05 {
+    fn a(&self) -> Result<String> {
+        let top_boxes = self.move_crates(false)?;
+        Ok(top_boxes)
+    }
 
     fn b(&self) -> Result<String> {
-        let mut matrix = self.parse_stacks()?;
-        let movements = self.get_movements();
-
-        movements.iter().for_each(|mv| {
-            let col_len = matrix[mv.from].len();
-            let removed = matrix[mv.from]
-                .drain((col_len - 1 - mv.amount)..)
-                .collect::<Vec<char>>();
-
-            removed.iter().for_each(|c| {
-                matrix[mv.to].push(*c);
-            });
-        });
-
-        let top_boxes: String = matrix.iter().map(|col| *col.last().unwrap()).collect();
-
+        let top_boxes = self.move_crates(true)?;
         Ok(top_boxes)
     }
 
