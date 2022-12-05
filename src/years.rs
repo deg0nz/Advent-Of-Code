@@ -69,6 +69,9 @@ pub fn get() -> Result<Vec<Year>, Report> {
     year2022
         .days
         .push(Box::new(twenty_22::day_04::Day04::new()?));
+    year2022
+        .days
+        .push(Box::new(twenty_22::day_05::Day05::new()?));
 
     let mut years: Vec<Year> = Vec::new();
     years.push(year2021);
