@@ -29,6 +29,31 @@ impl Day03 {
         amount
     }
 
+    fn get_amounts_for_column_of_remaining(&self, col: usize, remaining: &Vec<&str>) -> (u32, u32) {
+        let mut amount: (u32, u32) = (0, 0);
+
+        remaining.iter().for_each(|line| {
+            let mut chars = line.chars();
+            if let Some(c) = chars.nth(col) {
+                if c == '0' {
+                    amount.0 += 1;
+                } else {
+                    amount.1 += 1;
+                }
+            }
+        });
+
+        amount
+    }
+
+    fn get_most_common(amounts: (u32, u32)) -> char {
+        if amounts.0 > amounts.1 { 
+            return '0' 
+        } else {
+             return '1' 
+        }
+    }
+
     fn string_to_u32(&self, string: &str) -> Result<u32> {
         Ok(u32::from_str_radix(string, 2)?)
     }
@@ -67,19 +92,20 @@ impl Day for Day03 {
         Ok(solution)
     }
 
-    //TODO: This is not solved yet!
     fn b(&self) -> Result<String> {
         let line_len = self.data.lines().next().unwrap().len();
         let mut oxygen_generator_rating_filter = self.data.lines().collect::<Vec<&str>>();
         let mut co2_scrubber_rating_filter = oxygen_generator_rating_filter.clone();
-        let mut oxygen_generator_rating: u32 = 0;
-        let mut co2_scrubber_rating: u32 = 0;
+        let mut amounts: (u32, u32);
+        let mut most_common: char;
 
         for col in 0..line_len {
-            let amounts = self.get_amounts_for_column(col);
-            let most_common = if amounts.0 > amounts.1 { '0' } else { '1' };
 
-            oxygen_generator_rating_filter = oxygen_generator_rating_filter
+            if oxygen_generator_rating_filter.len() > 1 {
+                amounts = self.get_amounts_for_column_of_remaining(col, &oxygen_generator_rating_filter);
+                most_common = Day03::get_most_common(amounts);
+
+                oxygen_generator_rating_filter = oxygen_generator_rating_filter
                 .iter()
                 .filter(|line| {
                     let c = line.chars().nth(col).unwrap();
@@ -87,8 +113,13 @@ impl Day for Day03 {
                 })
                 .copied()
                 .collect::<Vec<&str>>();
+            }
 
-            co2_scrubber_rating_filter = co2_scrubber_rating_filter
+            if co2_scrubber_rating_filter.len() > 1 {
+                amounts = self.get_amounts_for_column_of_remaining(col, &co2_scrubber_rating_filter);
+                most_common = Day03::get_most_common(amounts);
+
+                co2_scrubber_rating_filter = co2_scrubber_rating_filter
                 .iter()
                 .filter(|line| {
                     let c = line.chars().nth(col).unwrap();
@@ -96,20 +127,14 @@ impl Day for Day03 {
                 })
                 .copied()
                 .collect::<Vec<&str>>();
-
-            if oxygen_generator_rating_filter.len() == 1 {
-                oxygen_generator_rating =
-                    self.string_to_u32(oxygen_generator_rating_filter.first().unwrap())?;
-            }
-
-            if co2_scrubber_rating_filter.len() == 1 {
-                co2_scrubber_rating =
-                    self.string_to_u32(co2_scrubber_rating_filter.first().unwrap())?;
             }
         }
 
-        // dbg!(oxygen_generator_rating_filter);
-        // dbg!(co2_scrubber_rating_filter);
+        let oxygen_generator_rating =
+            self.string_to_u32(oxygen_generator_rating_filter.first().unwrap())?;
+
+        let co2_scrubber_rating =
+            self.string_to_u32(co2_scrubber_rating_filter.first().unwrap())?;
 
         let solution = format!("Oxygen generator rating: {} ({:b}) | CO2 scrubber rating: {} ({:b}) | Life support rating: {}", oxygen_generator_rating, oxygen_generator_rating, co2_scrubber_rating, co2_scrubber_rating, oxygen_generator_rating * co2_scrubber_rating);
 
