@@ -53,6 +53,9 @@ pub fn get() -> Result<Vec<Year>, Report> {
     year2021
         .days
         .push(Box::new(twenty_21::day_07::Day07::new()?));
+    year2021
+        .days
+        .push(Box::new(twenty_21::day_08::Day08::new()?));
 
     // ================ 2022 ================ 
 
