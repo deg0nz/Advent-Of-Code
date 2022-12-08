@@ -12,7 +12,7 @@ impl Day06 {
         Ok(Self { data: input })
     }
 
-    fn is_marker(slice: &str) -> bool { 
+    fn is_marker(slice: &str) -> bool {
         let duplicates = slice
             .chars() // We iterate the slice's chars Vec and filter:
             .filter(|c| slice.matches(*c).count() > 1) // If the current char has more than 1 ocurrence, it stays
@@ -43,12 +43,18 @@ impl Day06 {
 impl Day for Day06 {
     fn a(&self) -> Result<String> {
         let marker_pos = self.get_marker_pos(4);
-        Ok(format!("First message marker with 4 distinct chars: {}", marker_pos.to_string()))
+        Ok(format!(
+            "First message marker with 4 distinct chars: {}",
+            marker_pos.to_string()
+        ))
     }
 
     fn b(&self) -> Result<String> {
         let marker_pos = self.get_marker_pos(14);
-        Ok(format!("First message marker with 14 distinct chars: {}", marker_pos.to_string()))
+        Ok(format!(
+            "First message marker with 14 distinct chars: {}",
+            marker_pos.to_string()
+        ))
     }
 
     fn get_title(&self) -> &str {

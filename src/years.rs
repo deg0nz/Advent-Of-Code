@@ -28,8 +28,7 @@ impl Year {
 }
 
 pub fn get() -> Result<Vec<Year>, Report> {
-    
-    // ================ 2021 ================ 
+    // ================ 2021 ================
 
     let mut year2021 = Year::new(2021);
     year2021
@@ -57,7 +56,7 @@ pub fn get() -> Result<Vec<Year>, Report> {
         .days
         .push(Box::new(twenty_21::day_08::Day08::new()?));
 
-    // ================ 2022 ================ 
+    // ================ 2022 ================
 
     let mut year2022 = Year::new(2022);
     year2022

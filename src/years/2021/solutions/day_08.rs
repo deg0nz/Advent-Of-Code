@@ -4,7 +4,7 @@ use crate::util::{self, Day};
 use color_eyre::eyre::Result;
 
 pub struct Day08 {
-    input: String
+    input: String,
 }
 
 impl Day08 {
@@ -25,15 +25,15 @@ impl Day08 {
         match sig {
             "acedgfb" => digit = "8",
             "cdfbe" => digit = "5",
-            "gcdfa" =>  digit = "2",
+            "gcdfa" => digit = "2",
             "fbcad" => digit = "3",
             "dab" => digit = "7",
             "cefabd" => digit = "9",
             "cdfgeb" => digit = "6",
             "eafb" => digit = "4",
             "cagedb" => digit = "0",
-            "ab" =>  digit = "1",
-            _ => ()
+            "ab" => digit = "1",
+            _ => (),
         }
 
         digit
@@ -46,12 +46,12 @@ impl Day for Day08 {
 
         self.input.lines().for_each(|line| {
             let output = Day08::get_output_values_vec(line);
-            output.iter().for_each(|output_value| {
-                match output_value.len() {
+            output
+                .iter()
+                .for_each(|output_value| match output_value.len() {
                     2 | 4 | 3 | 7 => num_unique_outputs += 1,
-                    _ => ()
-                }
-            });
+                    _ => (),
+                });
         });
 
         Ok(num_unique_outputs.to_string())

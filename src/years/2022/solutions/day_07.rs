@@ -1,7 +1,4 @@
-use std::{
-    collections::HashMap,
-    path::PathBuf,
-};
+use std::{collections::HashMap, path::PathBuf};
 
 use crate::util::{self, Day};
 use color_eyre::eyre::Result;
@@ -91,7 +88,10 @@ impl Day for Day07 {
             })
             .sum();
 
-        Ok(format!("Total size of all directories < 100000: {}", sum_dirs_smaller_than_100k.to_string()))
+        Ok(format!(
+            "Total size of all directories < 100000: {}",
+            sum_dirs_smaller_than_100k.to_string()
+        ))
     }
 
     fn b(&self) -> Result<String> {
@@ -103,15 +103,18 @@ impl Day for Day07 {
             .iter()
             .filter_map(|(_path, size)| {
                 if *size > space_needed {
-                    return Some(size)
-                }   
+                    return Some(size);
+                }
 
                 None
             })
             .min()
             .unwrap();
 
-        Ok(format!("Size of smallest folder to delete for update: {}", smallest_folder.to_string()))
+        Ok(format!(
+            "Size of smallest folder to delete for update: {}",
+            smallest_folder.to_string()
+        ))
     }
 
     fn get_title(&self) -> &str {

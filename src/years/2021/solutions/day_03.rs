@@ -47,10 +47,10 @@ impl Day03 {
     }
 
     fn get_most_common(amounts: (u32, u32)) -> char {
-        if amounts.0 > amounts.1 { 
-            return '0' 
+        if amounts.0 > amounts.1 {
+            return '0';
         } else {
-             return '1' 
+            return '1';
         }
     }
 
@@ -100,33 +100,34 @@ impl Day for Day03 {
         let mut most_common: char;
 
         for col in 0..line_len {
-
             if oxygen_generator_rating_filter.len() > 1 {
-                amounts = self.get_amounts_for_column_of_remaining(col, &oxygen_generator_rating_filter);
+                amounts =
+                    self.get_amounts_for_column_of_remaining(col, &oxygen_generator_rating_filter);
                 most_common = Day03::get_most_common(amounts);
 
                 oxygen_generator_rating_filter = oxygen_generator_rating_filter
-                .iter()
-                .filter(|line| {
-                    let c = line.chars().nth(col).unwrap();
-                    c == most_common
-                })
-                .copied()
-                .collect::<Vec<&str>>();
+                    .iter()
+                    .filter(|line| {
+                        let c = line.chars().nth(col).unwrap();
+                        c == most_common
+                    })
+                    .copied()
+                    .collect::<Vec<&str>>();
             }
 
             if co2_scrubber_rating_filter.len() > 1 {
-                amounts = self.get_amounts_for_column_of_remaining(col, &co2_scrubber_rating_filter);
+                amounts =
+                    self.get_amounts_for_column_of_remaining(col, &co2_scrubber_rating_filter);
                 most_common = Day03::get_most_common(amounts);
 
                 co2_scrubber_rating_filter = co2_scrubber_rating_filter
-                .iter()
-                .filter(|line| {
-                    let c = line.chars().nth(col).unwrap();
-                    c != most_common
-                })
-                .copied()
-                .collect::<Vec<&str>>();
+                    .iter()
+                    .filter(|line| {
+                        let c = line.chars().nth(col).unwrap();
+                        c != most_common
+                    })
+                    .copied()
+                    .collect::<Vec<&str>>();
             }
         }
 
