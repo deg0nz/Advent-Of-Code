@@ -103,10 +103,10 @@ impl Day for Day07 {
             .iter()
             .filter_map(|(_path, size)| {
                 if *size > space_needed {
-                    return Some(size);
+                    Some(size)
+                } else {
+                    None
                 }
-
-                None
             })
             .min()
             .unwrap();

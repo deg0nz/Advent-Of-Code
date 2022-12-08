@@ -20,12 +20,7 @@ impl Day05 {
         let split_line = input
             .lines()
             .enumerate()
-            .find_map(|(num, line)| {
-                if line.is_empty() {
-                    return Some(num);
-                }
-                None
-            })
+            .find_map(|(num, line)| if line.is_empty() { Some(num) } else { None })
             .unwrap();
 
         Ok(Self {
@@ -45,13 +40,7 @@ impl Day05 {
             .chars()
             .into_iter()
             .enumerate()
-            .filter_map(|(i, c)| {
-                if c.is_digit(10) {
-                    return Some(i);
-                }
-
-                None
-            })
+            .filter_map(|(i, c)| if c.is_digit(10) { Some(i) } else { None })
             .collect::<Vec<usize>>();
 
         matrix_input.iter().rev().for_each(|row| {
