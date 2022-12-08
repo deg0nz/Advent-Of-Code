@@ -79,13 +79,7 @@ impl Day for Day07 {
         let sum_dirs_smaller_than_100k: i64 = day_07
             .dir_sizes
             .iter()
-            .filter_map(|(_dir_name, size)| {
-                if *size <= 100000 {
-                    return Some(size);
-                }
-
-                None
-            })
+            .filter_map(|(_dir_name, size)| if *size <= 100000 { Some(size) } else { None })
             .sum();
 
         Ok(format!(
