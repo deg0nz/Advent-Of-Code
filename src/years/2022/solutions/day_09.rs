@@ -44,13 +44,29 @@ impl Day09 {
 
     fn move_tail(
         head: (i32, i32),
-        last_head: (i32, i32),
         tail: &mut (i32, i32),
     ) -> bool {
+
+        // I was just setting the current tail to the last head at first. Of course that didn't work for Part 2.
+        // Couldn't wrap my head around it. The head/tail comparison below is from u/compdog
+        // https://www.reddit.com/r/adventofcode/comments/zgwhh1/comment/izk1hzt
+
         if Day09::tail_needs_to_move(&head, tail) {
-            let new_tail = last_head;
-            tail.0 = new_tail.0;
-            tail.1 = new_tail.1;
+            if tail.0 < head.0 {
+                tail.0 += 1;
+            }
+
+            if tail.0 > head.0 {
+                tail.0 -= 1;
+            }
+
+            if tail.1 < head.1 {
+                tail.1 += 1;
+            }
+
+            if tail.1 > head.1 {
+                tail.1 -= 1;
+            }
 
             true
         } else {
@@ -58,21 +74,17 @@ impl Day09 {
         }
     }
 
-    fn move_rope(rope: &mut Vec<(i32, i32)>, last_head: (i32, i32)) -> bool {
+    fn move_rope(rope: &mut Vec<(i32, i32)>) -> bool {
         let mut last_tail_moved = false;
 
-        let mut last_head = last_head;
         for i in (0..rope.len()).rev() {
+
             let head = rope[i];
 
             if i > 0 {
                 let tail = &mut rope[i - 1];
-                last_tail_moved = Day09::move_tail(head, last_head, tail) && i == 1;
-                last_head = head;
+                last_tail_moved = Day09::move_tail(head, tail) && i == 1;
             }
-
-            // dbg!(i);
-            // dbg!(&rope[i]);
         }
 
         last_tail_moved
@@ -88,7 +100,7 @@ impl Day for Day09 {
         self.input.iter().for_each(|(direction, count)| {
             for _i in 0..*count {
                 let last_head = Day09::advance_head(*direction, &mut head);
-                let tail_moved = Day09::move_tail(head, last_head, &mut tail);
+                let tail_moved = Day09::move_tail(head, &mut tail);
 
                 if tail_moved {
                     if !tail_movements.contains(&tail) {
@@ -111,18 +123,21 @@ impl Day for Day09 {
             rope.push((0, 0));
         }
 
+        tail_movements.push((15,11));
+
         self.input.iter().for_each(|(direction, count)| {
             for _i in 0..*count {
                 let head_idx = rope.len() - 1;
-                let last_head = Day09::advance_head(*direction, &mut rope[head_idx]);
+                Day09::advance_head(*direction, &mut rope[head_idx]);
 
-                let tail_moved = Day09::move_rope(&mut rope, last_head);
+                let tail_moved = Day09::move_rope(&mut rope);
 
                 if tail_moved {
                     if !tail_movements.contains(&rope[0]) {
                         tail_movements.push(rope[0].clone());
                     }
                 }
+
             }
         });
 
