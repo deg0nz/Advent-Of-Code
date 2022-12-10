@@ -82,10 +82,10 @@ impl Day08 {
                 dbg!(&start, &end, &i);
                 // if start + i < end {
                 //     viewing_distance += 1;
-                // } 
+                // }
 
                 return (false, viewing_distance);
-            }  
+            }
 
             viewing_distance += 1;
 

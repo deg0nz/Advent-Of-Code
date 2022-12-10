@@ -1,4 +1,4 @@
-use std::{collections::VecDeque, borrow::BorrowMut};
+use std::{borrow::BorrowMut, collections::VecDeque};
 
 use crate::util::{self, Day};
 use color_eyre::eyre::Result;
@@ -42,11 +42,7 @@ impl Day09 {
         last_head
     }
 
-    fn move_tail(
-        head: (i32, i32),
-        tail: &mut (i32, i32),
-    ) -> bool {
-
+    fn move_tail(head: (i32, i32), tail: &mut (i32, i32)) -> bool {
         // I was just setting the current tail to the last head at first. Of course that didn't work for Part 2.
         // Couldn't wrap my head around it. The head/tail comparison below is from u/compdog
         // https://www.reddit.com/r/adventofcode/comments/zgwhh1/comment/izk1hzt
@@ -78,7 +74,6 @@ impl Day09 {
         let mut last_tail_moved = false;
 
         for i in (0..rope.len()).rev() {
-
             let head = rope[i];
 
             if i > 0 {
@@ -123,7 +118,7 @@ impl Day for Day09 {
             rope.push((0, 0));
         }
 
-        tail_movements.push((15,11));
+        tail_movements.push((15, 11));
 
         self.input.iter().for_each(|(direction, count)| {
             for _i in 0..*count {
@@ -137,7 +132,6 @@ impl Day for Day09 {
                         tail_movements.push(rope[0].clone());
                     }
                 }
-
             }
         });
 
