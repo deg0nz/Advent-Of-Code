@@ -1,5 +1,3 @@
-use std::{borrow::BorrowMut, collections::VecDeque};
-
 use crate::util::{self, Day};
 use color_eyre::eyre::Result;
 
