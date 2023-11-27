@@ -1,5 +1,3 @@
-use core::num;
-
 use crate::util::{self, Day};
 use color_eyre::eyre::Result;
 
@@ -19,7 +17,7 @@ impl Day08 {
         output_side.split_whitespace().collect::<Vec<&str>>()
     }
 
-    fn identify_signal(sig: &str) -> &str {
+    fn _identify_signal(sig: &str) -> &str {
         let mut digit: &str = "";
 
         match sig {

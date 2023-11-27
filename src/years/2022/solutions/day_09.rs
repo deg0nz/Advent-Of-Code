@@ -92,7 +92,7 @@ impl Day for Day09 {
 
         self.input.iter().for_each(|(direction, count)| {
             for _i in 0..*count {
-                let last_head = Day09::advance_head(*direction, &mut head);
+                let _last_head = Day09::advance_head(*direction, &mut head);
                 let tail_moved = Day09::move_tail(head, &mut tail);
 
                 if tail_moved {

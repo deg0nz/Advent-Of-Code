@@ -6,6 +6,8 @@ use crate::util::Day;
 pub mod twenty_21;
 #[path = "years/2022/solutions/mod.rs"]
 pub mod twenty_22;
+#[path = "years/2023/solutions/mod.rs"]
+pub mod twenty_23;
 
 pub struct Year {
     pub number: u32,
@@ -90,9 +92,15 @@ pub fn get() -> Result<Vec<Year>, Report> {
         .days
         .push(Box::new(twenty_22::day_10::Day10::new()?));
 
+    // ================ 2023 ================
+
+    let mut year2023 = Year::new(2023);
+    year2023.days.push(Box::new(twenty_23::day_01::Day01::new()?));
+
     let mut years: Vec<Year> = Vec::new();
     years.push(year2021);
     years.push(year2022);
+    years.push(year2023);
 
     Ok(years)
 }

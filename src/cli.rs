@@ -32,7 +32,7 @@ fn parse_args() -> Result<Args, lexopt::Error> {
                 println!("Usage: aoc [-y|--year] NUM [-d|--day] NUM [-a|--all]");
                 println!("If --year is called without --day, all days of that year are executed.");
                 println!("If --all is executed, --year and --day are ignored.");
-                println!("No arguments mean the las day of the most recent year is executed.");
+                println!("No arguments mean the last day of the most recent year is executed.");
                 std::process::exit(0);
             }
             _ => return Err(arg.unexpected()),
