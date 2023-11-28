@@ -10,9 +10,6 @@ pub struct Day08 {
 impl Day08 {
     pub fn new() -> Result<Day08> {
         let input = util::read_input(2021, 8, false)?;
-        // let input =
-        //     "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"
-        //         .to_string();
 
         Ok(Self { input })
     }
@@ -90,7 +87,7 @@ impl Day08 {
             })
             .collect::<Vec<&&str>>();
 
-        // Filter 6ers and 5ers
+        // Filter signals with 6 segments
         let sixers = uniques_filtered
             .iter()
             .filter(|&&&pattern| {
@@ -120,7 +117,7 @@ impl Day08 {
         // 6 is left
         pattern_map.insert(6, sixers.last().unwrap().to_string());
 
-        // Filter 5ers
+        // Filter signals wih 5 segments
         let fivers = uniques_filtered
             .iter()
             .filter(|&&&pattern| {
