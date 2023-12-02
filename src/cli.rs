@@ -1,11 +1,15 @@
-use color_eyre::Report;
+use chrono::Datelike;
+use std::io::Write;
+use std::{env::current_exe, fs::File};
 
 use crate::years::Year;
+use color_eyre::{Report, Result as EyreResult};
 
 pub struct Args {
     pub year: Option<u32>,
     pub day: Option<u32>,
     pub all: bool,
+    pub new_day: bool,
 }
 
 fn parse_args() -> Result<Args, lexopt::Error> {
@@ -13,10 +17,14 @@ fn parse_args() -> Result<Args, lexopt::Error> {
 
     let mut year = None;
     let mut day = None;
+    let mut new_day: bool = false;
     let mut all = false;
     let mut parser = lexopt::Parser::from_env();
     while let Some(arg) = parser.next()? {
         match arg {
+            Short('n') | Long("new-day") => {
+                new_day = true;
+            }
             Short('y') | Long("year") => {
                 year = Some(parser.value()?.parse()?);
             }
@@ -39,11 +47,34 @@ fn parse_args() -> Result<Args, lexopt::Error> {
         }
     }
 
-    Ok(Args { year, day, all })
+    Ok(Args {
+        year,
+        day,
+        all,
+        new_day,
+    })
 }
 
 pub fn process_args(years: Vec<Year>) -> Result<(), Report> {
     let args = parse_args()?;
+    let current_date = chrono::Utc::now();
+
+    if args.new_day {
+        let mut year = current_date.year();
+        let mut day = current_date.day();
+
+        if let Some(day_arg) = args.day {
+            day = day_arg;
+        }
+
+        if let Some(year_arg) = args.year {
+            year = year_arg as i32;
+        }
+
+        create_day_file(year, day)?;
+
+        return Ok(());
+    }
 
     if let Some(year) = args.year {
         let year_to_execute = years
@@ -85,6 +116,76 @@ pub fn process_args(years: Vec<Year>) -> Result<(), Report> {
     year_to_execute.print();
     let day_to_execute = year_to_execute.days.last().unwrap();
     day_to_execute.run()?;
+
+    Ok(())
+}
+
+fn create_day_file(year: i32, day: u32) -> EyreResult<()> {
+    println!("Creating new day file for year {}, day {}", year, day);
+
+    let mut day_str = day.to_string();
+
+    if day < 10 {
+        day_str.insert(0, '0');
+    }
+
+    let day_template = format!(
+        "
+use crate::util::Day;
+use color_eyre::eyre::Result;
+
+pub struct Day{day_str} {{
+    input: String,
+}}
+
+
+impl Day{day_str} {{
+    pub fn new() -> Result<Day{day_str}> {{
+        let input = Day{day_str}::get_input({year}, {day}, false)?;
+
+        Ok(Self {{ input }})
+    }}
+}}
+
+impl Day for Day{day_str} {{
+    fn a(&self) -> Result<String> {{
+        Ok(\"a\".to_string())
+    }}
+
+    fn b(&self) -> Result<String> {{
+        Ok(\"b\".to_string())
+    }}
+
+    fn get_title(&self) -> &str {{
+        \"--- Day {day}: FooBar ---\"
+    }}
+}}
+    ",
+        day_str = day_str,
+        year = year,
+        day = day
+    );
+
+    let current_path = current_exe()?;
+    let path = format!(
+        "{}/src/years/{}/solutions/day_{}.rs",
+        current_path
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .display(),
+        year,
+        day_str
+    );
+
+    println!("{}", path);
+
+    let mut day_file = File::create(path)?;
+
+    write!(&mut day_file, "{}", day_template)?;
 
     Ok(())
 }
