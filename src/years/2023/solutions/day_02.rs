@@ -1,5 +1,3 @@
-use core::num;
-
 use crate::util::Day;
 use color_eyre::eyre::Result;
 

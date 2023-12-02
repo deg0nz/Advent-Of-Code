@@ -25,7 +25,7 @@ impl Day10 {
     }
 
     fn set_sprite(x: &i32, sprite: &mut Vec<i32>) {
-        for (pos, val) in (*x-1..=*x+1).enumerate() {
+        for (pos, val) in (*x - 1..=*x + 1).enumerate() {
             sprite[pos] = val;
         }
     }
@@ -87,7 +87,7 @@ impl Day for Day10 {
 
     fn b(&self) -> Result<String> {
         let mut display: Vec<Vec<char>> = Vec::new();
-        let mut current_sprite: Vec<i32> = Vec:: new();
+        let mut current_sprite: Vec<i32> = Vec::new();
         let mut current_row: usize = 0;
         let mut current_row_pos: i32;
 
@@ -98,7 +98,7 @@ impl Day for Day10 {
         let mut instruction_hold: Option<String> = None;
 
         display.push(Vec::new());
-        
+
         for i in 0..=2 {
             current_sprite.push(i);
         }
@@ -111,26 +111,31 @@ impl Day for Day10 {
             Day10::set_sprite(&x, &mut current_sprite);
             current_row_pos = (cycle % 40) - 1;
 
-            if cycle > 0 {    
+            if cycle > 0 {
                 if current_sprite.contains(&current_row_pos) {
                     display[current_row].push('#');
                 } else {
                     display[current_row].push('.');
                 }
 
-                dbg!(&x, &cycle, &current_row_pos, &display[current_row].last(), &current_sprite);
+                dbg!(
+                    &x,
+                    &cycle,
+                    &current_row_pos,
+                    &display[current_row].last(),
+                    &current_sprite
+                );
             }
 
             match cycle {
                 40 | 80 | 120 | 160 | 200 | 240 => {
                     display.push(Vec::new());
                     current_row += 1;
-                },
+                }
                 _ => (),
             }
 
             if let Some(instruction) = input_iter.peek() {
-
                 // let line = instruction.0;
                 // dbg!(&cycle, &x, &line + 1, &instruction.1);
                 if instruction.1.as_str() == "noop" {
