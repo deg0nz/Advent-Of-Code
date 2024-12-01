@@ -34,7 +34,7 @@ impl Day02 {
         score
     }
 
-    fn get_my_choice_and_needed_outcome<'a>(&'a self, round: &'a str) -> (&str, &str) {
+    fn get_my_choice_and_needed_outcome<'a>(&'a self, round: &'a str) -> (&'a str, &'a str) {
         let round_elements = round.split_whitespace();
         let opponents_choice = round_elements.clone().into_iter().nth(0).unwrap();
         let needed_outcome = round_elements.last().unwrap();
