@@ -8,6 +8,8 @@ pub mod twenty_21;
 pub mod twenty_22;
 #[path = "years/2023/solutions/mod.rs"]
 pub mod twenty_23;
+#[path = "years/2024/solutions/mod.rs"]
+pub mod twenty_24;
 
 pub struct Year {
     pub number: u32,
@@ -36,6 +38,7 @@ pub fn get() -> Result<Vec<Year>, Report> {
     years.push(twenty_21::get()?);
     years.push(twenty_22::get()?);
     years.push(twenty_23::get()?);
+    years.push(twenty_24::get()?);
 
     Ok(years)
 }
