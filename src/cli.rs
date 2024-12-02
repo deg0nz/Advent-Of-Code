@@ -1,5 +1,7 @@
+use advent_of_code_client::{AocClient, Problem, Year as AocClientYear};
 use chrono::Datelike;
 use std::io::Write;
+use std::path::Path;
 use std::{env::current_exe, fs::File};
 
 use crate::years::Year;
@@ -72,6 +74,8 @@ pub fn process_args(years: Vec<Year>) -> Result<(), Report> {
         }
 
         create_day_file(year, day)?;
+
+        fetch_input_and_create_file(year, day)?;
 
         return Ok(());
     }
@@ -188,4 +192,36 @@ impl Day for Day{day_str} {{
     write!(&mut day_file, "{}", day_template)?;
 
     Ok(())
+}
+
+fn fetch_input_and_create_file(year: i32, day: u32) -> EyreResult<()> {
+    let current_path = current_exe()?;
+    let input_file_path = format!(
+        "{}/src/years/{}/input/day_{}.txt",
+        current_path
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .display(),
+        year,
+        day.to_string()
+    );
+
+    if Path::new(&input_file_path).exists() {
+        return Ok(());
+    } else {
+        println!(
+            "Input file for year {}, day {} does not exist. Trying to fetch input.",
+            year, day
+        );
+        let client = AocClient::default();
+        let problem = Problem::new(AocClientYear::Y2024, day as u8);
+        let input = client.get_input(problem).unwrap();
+        let mut file = File::create(input_file_path)?;
+        write!(&mut file, "{}", input)?;
+        Ok(())
+    }
 }
