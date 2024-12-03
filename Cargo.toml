@@ -9,5 +9,5 @@ edition = "2021"
 chrono = "0.4.31"
 color-eyre = "0.6"
 lexopt = "0.2.1"
-regex = "1.7.0"
 regex = "1.11.1"
+advent-of-code-client = { git = "https://github.com/deg0nz/advent-of-code-rust.git", branch = "add-2024" }
